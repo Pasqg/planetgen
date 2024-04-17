@@ -2,7 +2,7 @@ import bpy
 import os
 import sys
 
-def render(filename, withPreview):
+def render(filename, withPreview=False):
     resX = rndr.resolution_x
     resY = rndr.resolution_y
     if withPreview:
@@ -38,6 +38,7 @@ samples = int(argv[argv.index("-samples") + 1]) if "-samples" in argv else 32
 cameras = parseCameras(argv[argv.index("-cameras") + 1]) if "-cameras" in argv else ["full"]
 isRenderClouds = bool(argv[argv.index("-clouds") + 1]) if "-clouds" in argv else True
 colorMapPath = argv[argv.index("-colorMap") + 1] if "-colorMap" in argv else None
+heightMapPath = argv[argv.index("-heightMap") + 1] if "-heightMap" in argv else None
 atmosphereScale = 1.015
 
 print("Selected cameras: " + str(cameras))
@@ -53,7 +54,7 @@ bpy.data.objects["clouds3"].scale[0] = 1.01
 bpy.data.objects["clouds3"].scale[1] = 1.01
 bpy.data.objects["clouds3"].scale[2] = 1.01
 bpy.data.objects["clouds3"].hide_render = not isRenderClouds
-bpy.data.objects["planet2"].rotation_euler[2] = 180
+bpy.data.objects["planet2"].rotation_euler[2] = 90
 
 if colorMapPath is not None:
     colorMap = bpy.data.images.load(colorMapPath)
@@ -61,6 +62,13 @@ if colorMapPath is not None:
     colorMapNode.image = colorMap
     links = bpy.data.materials["land"].node_tree.links
     links.new(colorMapNode.outputs["Color"], bpy.data.materials["land"].node_tree.nodes["Principled BSDF"].inputs["Base Color"])
+
+if heightMapPath is not None:
+    heightMap = bpy.data.images.load(heightMapPath)
+    heightMapNode = bpy.data.materials["land"].node_tree.nodes.new('ShaderNodeTexImage')
+    heightMapNode.image = heightMap
+    links = bpy.data.materials["land"].node_tree.links
+    links.new(heightMapNode.outputs["Color"], bpy.data.materials["land"].node_tree.nodes["Displacement"].inputs["Height"])
 
 #setup render
 rndr = bpy.context.scene.render

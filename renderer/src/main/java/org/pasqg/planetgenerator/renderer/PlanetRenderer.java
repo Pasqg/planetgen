@@ -9,14 +9,15 @@ public enum PlanetRenderer {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         PlanetRenderer.render(new RenderArguments()
-                .setSizeX(512)
-                .setSizeY(512)
-                .setSamples(8)
-                .setClouds(false)
+                .setSizeX(1024)
+                .setSizeY(1024)
+                .setSamples(64)
+                .setClouds(true)
                 .setBlendFile(Defaults.PLANETS_BLEND)
                 .setRenderScript(Defaults.BLENDER_SCRIPT)
-                .setCameras("closeup")
+                .setCameras("full")
                 .setColorMap(Defaults.COLOR_MAP)
+                .setHeightMap(Defaults.HEIGHT_MAP)
         );
     }
 

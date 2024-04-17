@@ -11,6 +11,7 @@ public class RenderArguments {
     private boolean mClouds = true;
     private String mCameras = "full";
     private String mColorMap = null;
+    private String mHeightMap = null;
 
     public int getSizeX() {
         return mSizeX;
@@ -84,6 +85,15 @@ public class RenderArguments {
         return this;
     }
 
+    public String getHeightMap() {
+        return mHeightMap;
+    }
+
+    public RenderArguments setHeightMap(String aHeightMap) {
+        mHeightMap = aHeightMap;
+        return this;
+    }
+
     public ArgumentsBuilder toArgumentBuilder() {
         ArgumentsBuilder builder = new ArgumentsBuilder()
                 .addArgument("-b", mBlendFile)
@@ -96,6 +106,9 @@ public class RenderArguments {
                 .addArgument("-cameras", mCameras);
         if (mColorMap != null) {
             builder.addArgument("-colorMap", mColorMap);
+        }
+        if (mHeightMap != null) {
+            builder.addArgument("-heightMap", mHeightMap);
         }
         return builder;
     }
