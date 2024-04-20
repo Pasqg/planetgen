@@ -40,22 +40,30 @@ isRenderClouds = bool(argv[argv.index("-clouds") + 1]) if "-clouds" in argv else
 isGPU = bool(argv[argv.index("-gpu") + 1]) if "-gpu" in argv else False
 colorMapPath = argv[argv.index("-colorMap") + 1] if "-colorMap" in argv else None
 heightMapPath = argv[argv.index("-heightMap") + 1] if "-heightMap" in argv else None
-atmosphereScale = 1.015
+cloudsMapPath = argv[argv.index("-cloudsMap") + 1] if "-cloudsMap" in argv else None
+atmosphereScale = 1.008
+cloudsScale = 1 + (atmosphereScale - 1) * 0.3
 
 print("Selected cameras: " + str(cameras))
 
 
 #set material parameters
 #right click on parameter and then "copy data path" to get the python 
-bpy.data.materials["cloudsmaterial2"].node_tree.nodes["Value"].outputs[0].default_value = 1.0
+cloudsmaterial = bpy.data.materials["cloudsmaterial2"]
+cloudsmaterial.node_tree.nodes["Value"].outputs[0].default_value = 1.0
 bpy.data.objects["atmosphere2"].scale[0] = atmosphereScale
 bpy.data.objects["atmosphere2"].scale[1] = atmosphereScale
 bpy.data.objects["atmosphere2"].scale[2] = atmosphereScale
-bpy.data.objects["clouds3"].scale[0] = 1.01
-bpy.data.objects["clouds3"].scale[1] = 1.01
-bpy.data.objects["clouds3"].scale[2] = 1.01
+bpy.data.objects["clouds3"].scale[0] = cloudsScale
+bpy.data.objects["clouds3"].scale[1] = cloudsScale
+bpy.data.objects["clouds3"].scale[2] = cloudsScale
 bpy.data.objects["clouds3"].hide_render = not isRenderClouds
-bpy.data.objects["planet2"].rotation_euler[2] = 90
+
+bpy.data.objects["planet2"].rotation_euler[0] = 33 / 180 * 3.14
+bpy.data.objects["planet2"].rotation_euler[1] = 22 / 180 * 3.14
+bpy.data.objects["planet2"].rotation_euler[2] = 0 / 180 * 3.14
+bpy.data.objects["clouds3"].rotation_euler[2] = 43 / 180 * 3.14
+bpy.data.objects["clouds3"].rotation_euler[0] = -60 / 180 * 3.14
 
 if colorMapPath is not None:
     colorMap = bpy.data.images.load(colorMapPath)
@@ -71,12 +79,16 @@ if heightMapPath is not None:
     links = bpy.data.materials["land"].node_tree.links
     links.new(heightMapNode.outputs["Color"], bpy.data.materials["land"].node_tree.nodes["Displacement"].inputs["Height"])
 
+if cloudsMapPath is not None:
+    cloudsMap = bpy.data.images.load(cloudsMapPath)
+    cloudsmaterial.node_tree.nodes['Image Texture'].image = cloudsMap
+    cloudsmaterial.node_tree.nodes['Image Texture.001'].image = cloudsMap
+
 #setup render
 rndr = bpy.context.scene.render
 rndr.pixel_aspect_x = 1.0
 rndr.pixel_aspect_y = 1.0
 rndr.resolution_percentage = 100
-
 
 #Saves low resolution preview for debugging
 rndr.resolution_x = x

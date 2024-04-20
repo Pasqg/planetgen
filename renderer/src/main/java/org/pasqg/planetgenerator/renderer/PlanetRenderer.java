@@ -8,17 +8,28 @@ public enum PlanetRenderer {
     ;
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        PlanetRenderer.render(new RenderArguments()
-                .setSizeX(1024)
-                .setSizeY(1024)
-                .setSamples(64)
+        PlanetRenderer.render(args(4096, 256,"closeup")
+                .setSizeY(2560));
+    }
+
+    private static RenderArguments args(int aResolution, int aSamples, String aCamera) {
+        int resolutionY = switch (aCamera) {
+            case "full" -> aResolution;
+            case "closeup", "half" -> aResolution / 2;
+            default -> throw new IllegalStateException("Unexpected value: " + aCamera);
+        };
+        return new RenderArguments()
+                .setSizeX(aResolution)
+                .setSizeY(resolutionY)
+                .setSamples(aSamples)
                 .setClouds(true)
+                .setGPU(true)
                 .setBlendFile(Defaults.PLANETS_BLEND)
                 .setRenderScript(Defaults.BLENDER_SCRIPT)
-                .setCameras("full")
+                .setCameras(aCamera)
                 .setColorMap(Defaults.COLOR_MAP)
                 .setHeightMap(Defaults.HEIGHT_MAP)
-        );
+                .setCloudsMap(Defaults.CLOUDS_MAP);
     }
 
     public static void render(RenderArguments aArgs) throws IOException, InterruptedException {
