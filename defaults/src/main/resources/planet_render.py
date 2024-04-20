@@ -26,21 +26,25 @@ def parseCameras(cameras):
     else:
         return cameras.split(",")
 
+def parseArgument(argv, arg, defaultValue):
+    return argv[argv.index(arg) + 1] if arg in argv else defaultValue
+
 argv = sys.argv
 print(argv)
 
 # location of folder to save images to
 output_folder = ''
 
-x = int(argv[argv.index("-x") + 1]) if "-x" in argv else 256
-y = int(argv[argv.index("-y") + 1]) if "-y" in argv else 256
-samples = int(argv[argv.index("-samples") + 1]) if "-samples" in argv else 32
-cameras = parseCameras(argv[argv.index("-cameras") + 1]) if "-cameras" in argv else ["full"]
-isRenderClouds = bool(argv[argv.index("-clouds") + 1]) if "-clouds" in argv else True
-isGPU = bool(argv[argv.index("-gpu") + 1]) if "-gpu" in argv else False
-colorMapPath = argv[argv.index("-colorMap") + 1] if "-colorMap" in argv else None
-heightMapPath = argv[argv.index("-heightMap") + 1] if "-heightMap" in argv else None
-cloudsMapPath = argv[argv.index("-cloudsMap") + 1] if "-cloudsMap" in argv else None
+x = int(parseArgument(argv, "-x", 256))
+y = int(parseArgument(argv, "-y", 256))
+samples = int(parseArgument(argv, "-samples", 32))
+cameras = parseCameras(parseArgument(argv, "-cameras", "full"))
+isRenderClouds = parseArgument(argv, "-clouds", False)
+isGPU = bool(parseArgument(argv, "-gpu", False))
+colorMapPath = parseArgument(argv, "-colorMap", None)
+heightMapPath = parseArgument(argv, "-heightMap", None)
+cloudsMapPath = parseArgument(argv, "-cloudsMap", None)
+
 atmosphereScale = 1.008
 cloudsScale = 1 + (atmosphereScale - 1) * 0.3
 
