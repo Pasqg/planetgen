@@ -37,6 +37,7 @@ y = int(argv[argv.index("-y") + 1]) if "-y" in argv else 256
 samples = int(argv[argv.index("-samples") + 1]) if "-samples" in argv else 32
 cameras = parseCameras(argv[argv.index("-cameras") + 1]) if "-cameras" in argv else ["full"]
 isRenderClouds = bool(argv[argv.index("-clouds") + 1]) if "-clouds" in argv else True
+isGPU = bool(argv[argv.index("-gpu") + 1]) if "-gpu" in argv else False
 colorMapPath = argv[argv.index("-colorMap") + 1] if "-colorMap" in argv else None
 heightMapPath = argv[argv.index("-heightMap") + 1] if "-heightMap" in argv else None
 atmosphereScale = 1.015
@@ -81,5 +82,16 @@ rndr.resolution_percentage = 100
 rndr.resolution_x = x
 rndr.resolution_y = y
 bpy.data.scenes["Scene"].cycles.samples = samples
+
+if isGPU:
+    bpy.context.preferences.addons[
+        "cycles"
+    ].preferences.compute_device_type = "METAL"
+    bpy.context.scene.cycles.device = "GPU"
+    bpy.context.preferences.addons["cycles"].preferences.get_devices()
+    for d in bpy.context.preferences.addons["cycles"].preferences.devices:
+        if d["name"] == "AMD Radeon Pro 5500M":
+            d["use"] = 1
+            print(f"Using device: {d['name']}")
 
 [renderPlanet(camera) for camera in cameras]

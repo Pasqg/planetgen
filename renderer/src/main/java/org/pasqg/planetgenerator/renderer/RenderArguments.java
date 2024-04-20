@@ -9,6 +9,7 @@ public class RenderArguments {
     private int mSizeY = 256;
     private int mSamples = 32;
     private boolean mClouds = true;
+    private boolean mGPU = true;
     private String mCameras = "full";
     private String mColorMap = null;
     private String mHeightMap = null;
@@ -46,6 +47,15 @@ public class RenderArguments {
 
     public RenderArguments setClouds(boolean aClouds) {
         mClouds = aClouds;
+        return this;
+    }
+
+    public boolean isGPU() {
+        return mGPU;
+    }
+
+    public RenderArguments setGPU(boolean aGPU) {
+        mGPU = aGPU;
         return this;
     }
 
@@ -103,7 +113,8 @@ public class RenderArguments {
                 .addArgument("-y", mSizeY)
                 .addArgument("-samples", mSamples)
                 .addArgument("-clouds", mClouds)
-                .addArgument("-cameras", mCameras);
+                .addArgument("-cameras", mCameras)
+                .addArgument("-gpu", mGPU);
         if (mColorMap != null) {
             builder.addArgument("-colorMap", mColorMap);
         }
