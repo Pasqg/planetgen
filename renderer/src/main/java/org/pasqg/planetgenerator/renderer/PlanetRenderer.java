@@ -1,11 +1,14 @@
 package org.pasqg.planetgenerator.renderer;
 
 import org.pasqg.planetgenerator.defaults.Defaults;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public enum PlanetRenderer {
     ;
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlanetRenderer.class);
 
     public static void main(String[] args) throws IOException, InterruptedException {
         PlanetRenderer.render(args(4096, 256,"closeup")
@@ -38,8 +41,7 @@ public enum PlanetRenderer {
         processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
 
-        //todo: proper logging
-        System.out.println(String.join(" ", processBuilder.command()));
+        LOGGER.info(String.join(" ", processBuilder.command()));
         Process process = processBuilder.start();
         process.waitFor();
     }
