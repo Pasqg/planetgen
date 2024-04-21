@@ -1,5 +1,6 @@
 package org.pasqg.planetgenerator.renderer;
 
+import camera.RenderPresets;
 import org.pasqg.planetgenerator.defaults.Defaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,28 +12,8 @@ public enum PlanetRenderer {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlanetRenderer.class);
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        PlanetRenderer.render(args(4096, 256,"closeup")
-                .setSizeY(2560));
-    }
-
-    private static RenderArguments args(int aResolution, int aSamples, String aCamera) {
-        int resolutionY = switch (aCamera) {
-            case "full" -> aResolution;
-            case "closeup", "half" -> aResolution / 2;
-            default -> throw new IllegalStateException("Unexpected value: " + aCamera);
-        };
-        return new RenderArguments()
-                .setSizeX(aResolution)
-                .setSizeY(resolutionY)
-                .setSamples(aSamples)
-                .setClouds(true)
-                .setGPU(true)
-                .setBlendFile(Defaults.PLANETS_BLEND)
-                .setRenderScript(Defaults.BLENDER_SCRIPT)
-                .setCameras(aCamera)
-                .setColorMap(Defaults.COLOR_MAP)
-                .setHeightMap(Defaults.HEIGHT_MAP)
-                .setCloudsMap(Defaults.CLOUDS_MAP);
+        PlanetRenderer.render(RenderPresets.SOUTH_EAST_ASIA_FULL.getArguments(6144)
+                .setSamples(32));
     }
 
     public static void render(RenderArguments aArgs) throws IOException, InterruptedException {
