@@ -45,8 +45,15 @@ colorMapPath = parseArgument(argv, "-colorMap", None)
 heightMapPath = parseArgument(argv, "-heightMap", None)
 cloudsMapPath = parseArgument(argv, "-cloudsMap", None)
 
+planetRotationX = float(parseArgument(argv, "-planetRotationX", 0.0))
+planetRotationY = float(parseArgument(argv, "-planetRotationY", 0.0))
+planetRotationZ = float(parseArgument(argv, "-planetRotationZ", 0.0))
+cloudsRotationX = float(parseArgument(argv, "-cloudsRotationX", 0.0))
+cloudsRotationY = float(parseArgument(argv, "-cloudsRotationY", 0.0))
+cloudsRotationZ = float(parseArgument(argv, "-cloudsRotationZ", 0.0))
+
 atmosphereScale = 1.008
-cloudsScale = 1 + (atmosphereScale - 1) * 0.3
+cloudsScale = 1 + (atmosphereScale - 1) * 0.5
 
 print("Selected cameras: " + str(cameras))
 
@@ -63,11 +70,13 @@ bpy.data.objects["clouds3"].scale[1] = cloudsScale
 bpy.data.objects["clouds3"].scale[2] = cloudsScale
 bpy.data.objects["clouds3"].hide_render = not isRenderClouds
 
-bpy.data.objects["planet2"].rotation_euler[0] = 33 / 180 * 3.14
-bpy.data.objects["planet2"].rotation_euler[1] = 22 / 180 * 3.14
-bpy.data.objects["planet2"].rotation_euler[2] = 0 / 180 * 3.14
-bpy.data.objects["clouds3"].rotation_euler[2] = 43 / 180 * 3.14
-bpy.data.objects["clouds3"].rotation_euler[0] = -60 / 180 * 3.14
+to_rad = 3.14 / 180.0
+bpy.data.objects["planet2"].rotation_euler[0] = planetRotationX * to_rad
+bpy.data.objects["planet2"].rotation_euler[1] = planetRotationY * to_rad
+bpy.data.objects["planet2"].rotation_euler[2] = planetRotationZ * to_rad
+bpy.data.objects["clouds3"].rotation_euler[0] = cloudsRotationX * to_rad
+bpy.data.objects["clouds3"].rotation_euler[1] = cloudsRotationY * to_rad
+bpy.data.objects["clouds3"].rotation_euler[2] = cloudsRotationZ * to_rad
 
 if colorMapPath is not None:
     colorMap = bpy.data.images.load(colorMapPath)

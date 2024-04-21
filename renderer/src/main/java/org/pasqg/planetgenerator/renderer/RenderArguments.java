@@ -14,6 +14,12 @@ public class RenderArguments {
     private String mColorMap = null;
     private String mHeightMap = null;
     private String mCloudsMap = null;
+    private double mPlanetRotationX = 0.0;
+    private double mPlanetRotationY = 0.0;
+    private double mPlanetRotationZ = 0.0;
+    private double mCloudsRotationX = 0.0;
+    private double mCloudsRotationY = 0.0;
+    private double mCloudsRotationZ = 0.0;
 
     public int getSizeX() {
         return mSizeX;
@@ -114,6 +120,60 @@ public class RenderArguments {
         return this;
     }
 
+    public double getPlanetRotationX() {
+        return mPlanetRotationX;
+    }
+
+    public RenderArguments setPlanetRotationX(double aPlanetRotationX) {
+        mPlanetRotationX = aPlanetRotationX;
+        return this;
+    }
+
+    public double getPlanetRotationY() {
+        return mPlanetRotationY;
+    }
+
+    public RenderArguments setPlanetRotationY(double aPlanetRotationY) {
+        mPlanetRotationY = aPlanetRotationY;
+        return this;
+    }
+
+    public double getPlanetRotationZ() {
+        return mPlanetRotationZ;
+    }
+
+    public RenderArguments setPlanetRotationZ(double aPlanetRotationZ) {
+        mPlanetRotationZ = aPlanetRotationZ;
+        return this;
+    }
+
+    public double getCloudsRotationX() {
+        return mCloudsRotationX;
+    }
+
+    public RenderArguments setCloudsRotationX(double aCloudsRotationX) {
+        mCloudsRotationX = aCloudsRotationX;
+        return this;
+    }
+
+    public double getCloudsRotationY() {
+        return mCloudsRotationY;
+    }
+
+    public RenderArguments setCloudsRotationY(double aCloudsRotationY) {
+        mCloudsRotationY = aCloudsRotationY;
+        return this;
+    }
+
+    public double getCloudsRotationZ() {
+        return mCloudsRotationZ;
+    }
+
+    public RenderArguments setCloudsRotationZ(double aCloudsRotationZ) {
+        mCloudsRotationZ = aCloudsRotationZ;
+        return this;
+    }
+
     public ArgumentsBuilder toArgumentBuilder() {
         ArgumentsBuilder builder = new ArgumentsBuilder()
                 .addArgument("-b", mBlendFile)
@@ -124,6 +184,12 @@ public class RenderArguments {
                 .addArgument("-samples", mSamples)
                 .addArgument("-clouds", mClouds)
                 .addArgument("-cameras", mCameras)
+                .addArgument("-planetRotationX", mPlanetRotationX)
+                .addArgument("-planetRotationY", mPlanetRotationY)
+                .addArgument("-planetRotationZ", mPlanetRotationZ)
+                .addArgument("-cloudsRotationX", mCloudsRotationX)
+                .addArgument("-cloudsRotationY", mCloudsRotationY)
+                .addArgument("-cloudsRotationZ", mCloudsRotationZ)
                 .addArgument("-gpu", mGPU);
         if (mColorMap != null) {
             builder.addArgument("-colorMap", mColorMap);
