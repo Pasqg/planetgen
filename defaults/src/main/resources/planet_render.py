@@ -94,8 +94,7 @@ if heightMapPath is not None:
 
 if cloudsMapPath is not None:
     cloudsMap = bpy.data.images.load(cloudsMapPath)
-    cloudsmaterial.node_tree.nodes['Image Texture'].image = cloudsMap
-    cloudsmaterial.node_tree.nodes['Image Texture.001'].image = cloudsMap
+    cloudsmaterial.node_tree.nodes['cloudsTexture1'].image = cloudsMap
 
 #setup render
 rndr = bpy.context.scene.render

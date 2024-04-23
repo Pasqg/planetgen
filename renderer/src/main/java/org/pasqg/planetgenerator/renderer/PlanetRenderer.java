@@ -12,8 +12,8 @@ public enum PlanetRenderer {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlanetRenderer.class);
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        PlanetRenderer.render(RenderPresets.SOUTH_EAST_ASIA_FULL.getArguments(6144)
-                .setSamples(32));
+        PlanetRenderer.render(RenderPresets.WESTERN_ATLANTIC_CLOSEUP.getArguments(6144)
+                .setSamples(256));
     }
 
     public static void render(RenderArguments aArgs) throws IOException, InterruptedException {

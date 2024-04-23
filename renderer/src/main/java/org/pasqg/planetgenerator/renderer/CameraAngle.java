@@ -4,6 +4,7 @@ public enum CameraAngle {
     FULL,
     HALF,
     CLOSEUP,
+    CLOSEUP_SUNSET,
     ALL,
     ;
 }
