@@ -8,8 +8,8 @@ import static camera.RotationCoordinates.of;
 
 public enum RenderPresets {
     AMERICA_FULL(CameraAngle.FULL,
-            of(0, 0, -70),
-            of(4, -20, 73),
+            latLon(90, -220+180),
+            latLon(0, -220+180),
             1.6),
     AFRICA_FULL(CameraAngle.FULL,
             of(0, 0, -160),
@@ -42,6 +42,10 @@ public enum RenderPresets {
     WESTERN_ATLANTIC_CLOSEUP(CameraAngle.CLOSEUP,
             of(0, 35, -160),
             of(0, 35, -160),
+            1.6),
+    NEW_ZEALAND_FULL(CameraAngle.FULL,
+            latLon(-40, -174),
+            latLon(-40, -174),
             1.6),
     ;
 
@@ -85,5 +89,12 @@ public enum RenderPresets {
                 .setCloudsRotationX(mCloudsRotation.degreesX())
                 .setCloudsRotationY(mCloudsRotation.degreesY())
                 .setCloudsRotationZ(mCloudsRotation.degreesZ());
+    }
+
+    /**
+     * Coordinates from latitude and longitude
+     */
+    public static RotationCoordinates latLon(double aDegreesNorth, double aDegreesWest) {
+        return of(aDegreesNorth, 0, 220 + aDegreesWest);
     }
 }
