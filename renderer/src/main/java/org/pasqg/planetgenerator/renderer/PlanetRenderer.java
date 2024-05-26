@@ -1,6 +1,5 @@
 package org.pasqg.planetgenerator.renderer;
 
-import camera.RenderPresets;
 import org.pasqg.planetgenerator.defaults.Defaults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

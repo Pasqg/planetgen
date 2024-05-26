@@ -1,10 +1,6 @@
-package camera;
+package org.pasqg.planetgenerator.renderer;
 
 import org.pasqg.planetgenerator.defaults.Defaults;
-import org.pasqg.planetgenerator.renderer.CameraAngle;
-import org.pasqg.planetgenerator.renderer.RenderArguments;
-
-import static camera.RotationCoordinates.of;
 
 public enum RenderPresets {
     AMERICA_FULL(CameraAngle.FULL,
@@ -12,36 +8,36 @@ public enum RenderPresets {
             latLon(0, -220+180),
             1.6),
     AFRICA_FULL(CameraAngle.FULL,
-            of(0, 0, -160),
-            of(4, -20, 73),
+            RotationCoordinates.of(0, 0, -160),
+            RotationCoordinates.of(4, -20, 73),
             1.6),
     AFRICA_FULL_SOUTH(CameraAngle.FULL,
-            of(0, -22, -167),
-            of(4, -20, 73),
+            RotationCoordinates.of(0, -22, -167),
+            RotationCoordinates.of(4, -20, 73),
             1.6),
     EUROPE_FULL(CameraAngle.FULL,
-            of(0, 30, -160),
-            of(4, -20, 73),
+            RotationCoordinates.of(0, 30, -160),
+            RotationCoordinates.of(4, -20, 73),
             1.6),
     AUSTRALIA_FULL(CameraAngle.FULL,
-            of(0, 50, 70),
-            of(0, 50, 73),
+            RotationCoordinates.of(0, 50, 70),
+            RotationCoordinates.of(0, 50, 73),
             1.6),
     SOUTH_EAST_ASIA_FULL(CameraAngle.FULL,
-            of(0, 22, 100),
-            of(4, -20, 73),
+            RotationCoordinates.of(0, 22, 100),
+            RotationCoordinates.of(4, -20, 73),
             1.6),
     AUSTRALIA_CLOSEUP(CameraAngle.FULL,
-            of(0, 50, -160),
-            of(0, 50, 85),
+            RotationCoordinates.of(0, 50, -160),
+            RotationCoordinates.of(0, 50, 85),
             1.6),
     EUROPE_NORTH_POLE_FULL(CameraAngle.FULL,
-            of(0, 35, -160),
-            of(0, 35, -160),
+            RotationCoordinates.of(0, 35, -160),
+            RotationCoordinates.of(0, 35, -160),
             1.6),
     WESTERN_ATLANTIC_CLOSEUP(CameraAngle.CLOSEUP,
-            of(0, 35, -160),
-            of(0, 35, -160),
+            RotationCoordinates.of(0, 35, -160),
+            RotationCoordinates.of(0, 35, -160),
             1.6),
     NEW_ZEALAND_FULL(CameraAngle.FULL,
             latLon(-40, -174),
@@ -95,6 +91,6 @@ public enum RenderPresets {
      * Coordinates from latitude and longitude
      */
     public static RotationCoordinates latLon(double aDegreesNorth, double aDegreesWest) {
-        return of(aDegreesNorth, 0, 220 + aDegreesWest);
+        return RotationCoordinates.of(aDegreesNorth, 0, 220 + aDegreesWest);
     }
 }
