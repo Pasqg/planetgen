@@ -11,6 +11,7 @@ public class RenderArguments {
     private boolean mClouds = true;
     private boolean mGPU = true;
     private String mCameras = "full";
+    private String mOutputFilePrefix = "output";
     private String mColorMap = null;
     private String mHeightMap = null;
     private String mCloudsMap = null;
@@ -54,6 +55,15 @@ public class RenderArguments {
 
     public RenderArguments setClouds(boolean aClouds) {
         mClouds = aClouds;
+        return this;
+    }
+
+    public String getOutputFilePrefix() {
+        return mOutputFilePrefix;
+    }
+
+    public RenderArguments setOutputFilePrefix(String aOutputFilePrefix) {
+        mOutputFilePrefix = aOutputFilePrefix;
         return this;
     }
 
@@ -184,6 +194,7 @@ public class RenderArguments {
                 .addArgument("-samples", mSamples)
                 .addArgument("-clouds", mClouds)
                 .addArgument("-cameras", mCameras)
+                .addArgument("-outputFilePrefix", mOutputFilePrefix)
                 .addArgument("-planetRotationX", mPlanetRotationX)
                 .addArgument("-planetRotationY", mPlanetRotationY)
                 .addArgument("-planetRotationZ", mPlanetRotationZ)

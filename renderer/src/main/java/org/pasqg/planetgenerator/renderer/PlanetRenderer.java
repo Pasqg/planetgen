@@ -11,8 +11,10 @@ public enum PlanetRenderer {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlanetRenderer.class);
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        PlanetRenderer.render(RenderPresets.WESTERN_ATLANTIC_CLOSEUP.getArguments(6144)
-                .setSamples(256));
+        RenderPresets preset = RenderPresets.EUROPE_FULL;
+        PlanetRenderer.render(preset.getArguments(2048)
+                .setSamples(64)
+                .setOutputFilePrefix(preset.name().toLowerCase()));
     }
 
     public static void render(RenderArguments aArgs) throws IOException, InterruptedException {

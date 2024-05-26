@@ -16,9 +16,9 @@ def render(filename, withPreview=False):
     rndr.filepath = os.path.join(output_folder, filename)
     bpy.ops.render.render(write_still=True)
 
-def renderPlanet(camera):
+def renderPlanet(camera, outputFilePrefix):
     bpy.context.scene.camera = bpy.context.scene.objects["camera-" + camera]
-    render(camera + ".png", False)
+    render(f"{outputFilePrefix}-{camera}.png", False)
 
 def parseCameras(cameras):
     if cameras == "all":
@@ -32,13 +32,13 @@ def parseArgument(argv, arg, defaultValue):
 argv = sys.argv
 print(argv)
 
-# location of folder to save images to
-output_folder = ''
+output_folder = 'results'
 
 x = int(parseArgument(argv, "-x", 256))
 y = int(parseArgument(argv, "-y", 256))
 samples = int(parseArgument(argv, "-samples", 32))
 cameras = parseCameras(parseArgument(argv, "-cameras", "full"))
+outputFilePrefix = parseArgument(argv, "-outputFilePrefix", "output")
 isRenderClouds = parseArgument(argv, "-clouds", False)
 isGPU = bool(parseArgument(argv, "-gpu", False))
 colorMapPath = parseArgument(argv, "-colorMap", None)
@@ -59,7 +59,7 @@ print("Selected cameras: " + str(cameras))
 
 
 #set material parameters
-#right click on parameter and then "copy data path" to get the python 
+#right click on parameter and then "copy data path" to get the python equivalent
 cloudsmaterial = bpy.data.materials["cloudsmaterial2"]
 cloudsmaterial.node_tree.nodes["Value"].outputs[0].default_value = 1.0
 bpy.data.objects["atmosphere2"].scale[0] = atmosphereScale
@@ -102,7 +102,6 @@ rndr.pixel_aspect_x = 1.0
 rndr.pixel_aspect_y = 1.0
 rndr.resolution_percentage = 100
 
-#Saves low resolution preview for debugging
 rndr.resolution_x = x
 rndr.resolution_y = y
 bpy.data.scenes["Scene"].cycles.samples = samples
@@ -118,4 +117,4 @@ if isGPU:
             d["use"] = 1
             print(f"Using device: {d['name']}")
 
-[renderPlanet(camera) for camera in cameras]
+[renderPlanet(camera, outputFilePrefix) for camera in cameras]
